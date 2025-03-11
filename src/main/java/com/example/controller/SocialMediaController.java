@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.entity.Account;
+import com.example.entity.Message;
 import com.example.service.AccountService;
 import com.example.service.MessageService;
 
@@ -47,25 +48,41 @@ public class SocialMediaController {
     private MessageService messageService;
 
     @PostMapping("/register")
-    Public ResponseEntity<String> registerAccount(@RequestBody Account account) {
+    public ResponseEntity<?> registerAccount(@RequestBody Account account) {
         // Delegate to the Service Layer
-        String result = accountService.registerAccount(account);
+        return accountService.registerAccount(account);
     }
-    
 
     @PostMapping("/login")
-    Public User login(@RequestBody Account)
+    public ResponseEntity<?> loginAccount(@RequestBody Account account) {
+        // Delegate to the Service Layer
+        return accountService.loginAccount(account);
+    }
 
     @PostMapping("/messages")
+    public ResponseEntity<?> createMessage(@RequestBody Message message) {
+        // Delegate to the Service Layer
+        return messageService.createMessage(message);
+    }
 
     @GetMapping("/messages")
+    public ResponseEntity<?> getAllMessages() {
+        // Delegate to the Service Layer
+        return messageService.getAllMessages();
+    }
 
-    @GetMapping("/messages/{message_id}")
+    @GetMapping("/messages/{message_id}") {
+        public ResponseEntity<?> getMessageById(@RequestBody Message message) {
+            // Delegate to the Service Layer
+            return messageService.getMessageById(message.getMessageId());
+        }
+    }
 
-    @DeleteMapping("messages/{message_id}")
 
-    @PatchMapping("/messages/{message_id}")
+    // @DeleteMapping("messages/{message_id}")
 
-    @GetMapping("/accounts/{account_id}")
+    // @PatchMapping("/messages/{message_id}")
+
+    // @GetMapping("/accounts/{account_id}")
 
 }

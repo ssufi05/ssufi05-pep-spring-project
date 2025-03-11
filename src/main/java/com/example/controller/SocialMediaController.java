@@ -1,10 +1,7 @@
 package com.example.controller;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.entity.Account;
@@ -20,10 +17,6 @@ import com.example.service.MessageService;
  */
 
  /**
- * TODO: You will need to write your own endpoints and handlers for your controller. The endpoints you will need can be
- * found in readme.md as well as the test cases. You should
- * refer to prior mini-project labs and lecture materials for guidance on how a controller may be built.
- * 
  * The included endpoints:
  * 
  * POST localhost:8080/register : Create a new Account
@@ -71,18 +64,28 @@ public class SocialMediaController {
         return messageService.getAllMessages();
     }
 
-    @GetMapping("/messages/{message_id}") {
-        public ResponseEntity<?> getMessageById(@RequestBody Message message) {
-            // Delegate to the Service Layer
-            return messageService.getMessageById(message.getMessageId());
-        }
+    @GetMapping("/messages/{message_id}") 
+    public ResponseEntity<?> getMessageById(@PathVariable("message_id") Integer messageId) {
+        // Delegate to the Service Layer
+        return messageService.getMessageById(messageId);
+    }
+    
+    @DeleteMapping("messages/{message_id}")
+    public ResponseEntity<?> deleteMessageById(@PathVariable("message_id") Integer messageId) {
+        // Delegate to the Service Layer
+        return messageService.deleteMessageById(messageId);
     }
 
+    @PatchMapping("/messages/{message_id}")
+    public ResponseEntity<?> updateMessageById(@RequestBody Message newMessage, @PathVariable("message_id") Integer messageId) {
+        // Delegate to the Service Layer
+        return messageService.updateMessageById(newMessage, messageId);
+    }
 
-    // @DeleteMapping("messages/{message_id}")
-
-    // @PatchMapping("/messages/{message_id}")
-
-    // @GetMapping("/accounts/{account_id}")
+    @GetMapping("/accounts/{account_id}/messages")
+    public ResponseEntity<?> getAllMessagesByAccount(@PathVariable("account_id") Integer accountId) {
+        // Delegate to the Service Layer
+        return messageService.getAllMessagesByAccountId(accountId);
+    }
 
 }
